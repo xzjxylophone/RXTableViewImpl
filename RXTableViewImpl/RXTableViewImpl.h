@@ -44,6 +44,8 @@
 - (void)refresh;
 - (void)loadMore;
 
+// 初始化的时候最好在viewDidAppear:(BOOL)animated中使用
+// view有可能frame为Zero
 - (void)addToView:(UIView *)view;
 
 

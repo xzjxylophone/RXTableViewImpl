@@ -10,10 +10,6 @@
 
 
 
-#define BDSS_IsIPhoneX      ([UIScreen mainScreen].bounds.size.height == 812)
-#define BDSS_ScreenWidth        ([UIScreen mainScreen].bounds.size.width)
-#define BDSS_ScreenHeight        ([UIScreen mainScreen].bounds.size.height)
-
 
 @interface RXTableViewImpl()
 
@@ -77,17 +73,18 @@
     }
     
     
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    CGFloat height = [UIScreen mainScreen].bounds.size.height;
-    BOOL isIPhoneX = (height == 812);
-    CGFloat offset = (isIPhoneX ? 24 : 0) + (self.haveNavigationBar ? 64 : 0);
-    CGFloat contentViewHeight = height - offset;
-    CGFloat contentViewY = offset;
-    
+    CGFloat contentViewY = 0;
+    CGFloat width = view.frame.size.width;
+    CGFloat height = view.frame.size.height;
+    CGFloat contentViewHeight = height;
     if (self.haveNavigationBar) {
         UIViewController *vc = [self viewControllerWithView:view];
         // 表示传入参数View是vc的view,所以有可能有偏移的概念
         if (vc.view == view) {
+            BOOL isIPhoneX = (height == 812);
+            CGFloat offset = (isIPhoneX ? 24 : 0) + (self.haveNavigationBar ? 64 : 0);
+            contentViewHeight = height - offset;
+            contentViewY = offset;
             UINavigationController *nc = vc.navigationController;
             // 导航栏不透明,表面vc的view有偏移量,所以contentView要没有偏移量
             if (!nc.navigationBar.translucent) {
